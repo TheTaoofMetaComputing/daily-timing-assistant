@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>每日元计算择时助手</title>
+  <style>
+    body { font-family: 'Helvetica Neue', sans-serif; padding: 20px; background: #f5f5f5; color: #333; }
+    h1 { color: #2c3e50; }
+    .section { margin-bottom: 30px; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .label { font-weight: bold; color: #1a73e8; }
+    .good { color: green; }
+    .warn { color: orange; }
+    .bad { color: red; }
+    .input-group { margin-bottom: 10px; }
+    input { padding: 8px; font-size: 14px; width: 100%; box-sizing: border-box; margin-top: 5px; }
+    button { padding: 10px 20px; background-color: #1a73e8; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>每日元计算择时助手</h1>
+
+  <div class="section">
+    <div class="label">填写出生信息（八字推算参考）：</div>
+    <div class="input-group">
+      <label>出生年份：</label>
+      <input type="number" id="birthYear" placeholder="例如：1990">
+    </div>
+    <div class="input-group">
+      <label>出生月份：</label>
+      <input type="number" id="birthMonth" placeholder="1 到 12">
+    </div>
+    <div class="input-group">
+      <label>出生日：</label>
+      <input type="number" id="birthDay" placeholder="1 到 31">
+    </div>
+    <div class="input-group">
+      <label>出生时辰（0~23点）：</label>
+      <input type="number" id="birthHour" placeholder="例如：8">
+    </div>
+    <button onclick="analyzeUserInput()">分析个人择时建议</button>
+    <div id="userResult" style="margin-top:20px"></div>
+  </div>
+
+  <div class="section">
+    <div class="label">今日公历日期：</div>
+    <div id="gregorianDate"></div>
+    <div class="label">八字结构：</div>
+    <div>乙巳年 辛巳月 辛卯日 戊子时</div>
+    <div class="label">五行分析：</div>
+    <div>日主为辛金，卯木为地支，日主克地支，适合理财、数据分析等事务。</div>
+  </div>
+
+  <div class="section">
+    <div class="label">黄道星神：</div>
+    <div class="bad">玄武（黑道日） - 适合内修、策略，忌外出与大动。</div>
+    <div class="label">十二神：</div>
+    <div class="good">开日 - 万事皆宜，但忌破土与安葬。</div>
+    <div class="label">冲煞：</div>
+    <div class="warn">冲鸡 煞西 - 属鸡者慎行，忌向西出行。</div>
+  </div>
+
+  <div class="section">
+    <div class="label">投资行为建议：</div>
+    <ul>
+      <li>✅ 适合：策略回顾、数据回测、系统建模</li>
+      <li>⚠️ 谨慎：情绪化交易、盲目跟风开仓</li>
+      <li>⛔ 忌讳：无计划频繁交易</li>
+    </ul>
+    <div class="label">今日卦象：</div>
+    <div>中孚卦 - 诚信立身，慎行可安</div>
+  </div>
+
+  <script>
+    const now = new Date();
+    document.getElementById('gregorianDate').innerText = now.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+
+    function analyzeUserInput() {
+      const year = document.getElementById("birthYear").value;
+      const month = document.getElementById("birthMonth").value;
+      const day = document.getElementById("birthDay").value;
+      const hour = document.getElementById("birthHour").value;
+
+      if (!year || !month || !day || hour === '') {
+        document.getElementById("userResult").innerHTML = '<span class="bad">请填写完整的出生信息</span>';
+        return;
+      }
+
+      const result = `您输入的生日为：${year}年${month}月${day}日 ${hour}点。<br><br>
+        建议：<br>
+        - 📊 今日适合以分析策略、总结模型为主，不宜重仓开仓。<br>
+        - ☯ 若八字偏金水，今日属木克金，建议稳中有变，审慎操作。<br>
+        - 📅 可用于设立新计划或执行旧目标，不宜启动高风险行为。`;
+
+      document.getElementById("userResult").innerHTML = result;
+    }
+  </script>
+</body>
+</html>
